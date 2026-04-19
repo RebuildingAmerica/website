@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Format staged files with Prettier
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|css|html|json|md)$')
+
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+echo "$FILES" | xargs pnpm exec prettier --write
+echo "$FILES" | xargs git add
+
+exit 0

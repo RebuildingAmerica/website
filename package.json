@@ -1,13 +1,30 @@
 {
-  "name": "rebuilding-america-website",
+  "name": "@rebuildingamerica/website",
   "private": true,
   "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": ">=24.3.0 <25"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
-    "vite": "^5.4.0"
+    "@tailwindcss/vite": "4.2.2",
+    "prettier": "3.8.3",
+    "prettier-plugin-tailwindcss": "0.7.2",
+    "tailwindcss": "4.2.2",
+    "vite": "5.4.21"
   }
 }

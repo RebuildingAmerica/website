@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ─── MD3 Raw Color Values ──────────────────────────────────────── */
+:root {
+  --md-sys-color-surface: #fff8f7;
+  --md-sys-color-on-surface: #221919;
+  --md-sys-color-surface-container: #fceae9;
+  --md-sys-color-primary: #8f4a4c;
+  --md-sys-color-on-surface-variant: #524343;
+  --md-sys-color-outline-variant: #d7c1c1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-sys-color-surface: #1a1111;
+    --md-sys-color-on-surface: #f0dede;
+    --md-sys-color-surface-container: #271d1d;
+    --md-sys-color-primary: #ffb3b4;
+    --md-sys-color-on-surface-variant: #d7c1c1;
+    --md-sys-color-outline-variant: #524343;
+  }
+}
+
+/* ─── Tailwind Theme — MD3 Type Scale + Color Aliases ───────────── */
+@theme {
+  /* MD3 Type Scale */
+  --text-display-medium: 45px;
+  --text-display-medium--line-height: 52px;
+  --text-headline-large: 32px;
+  --text-headline-large--line-height: 40px;
+  --text-headline-small: 24px;
+  --text-headline-small--line-height: 32px;
+  --text-title-large: 22px;
+  --text-title-large--line-height: 28px;
+  --text-body-large: 16px;
+  --text-body-large--line-height: 26px;
+  --text-label-medium: 12px;
+  --text-label-medium--line-height: 16px;
+
+  /* Tracking */
+  --tracking-display: -0.5px;
+
+  /* MD3 Color Aliases */
+  --color-surface: var(--md-sys-color-surface);
+  --color-on-surface: var(--md-sys-color-on-surface);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --color-outline-variant: var(--md-sys-color-outline-variant);
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+body {
+  font-family: "Libre Baskerville", Georgia, serif;
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Interaction polish ────────────────────────────────────────── */
+::selection {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-surface);
+}
+
+:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+/* ─── Page layout ───────────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.quote-section blockquote {
+  hanging-punctuation: first;
+}
