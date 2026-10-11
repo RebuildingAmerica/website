@@ -139,7 +139,7 @@ if (action === "prepare") await prepare(false);
 else if (action === "candidate" || action === "deploy") {
   const production = action === "deploy";
   if (!production && routing(inventory()).some((row) => row.proxied))
-    throw new Error("Production is already on Cloudflare; use pnpm deploy.");
+    throw new Error("Production is already on Cloudflare; use pnpm run deploy.");
   if (production && !routing(inventory()).every((r) => r.proxied))
     throw new Error("Run hosting:cutover for the first production switch.");
   await prepare(production);

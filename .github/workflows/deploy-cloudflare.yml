@@ -33,7 +33,7 @@ jobs:
         run: test -n "$CLOUDFLARE_API_TOKEN"
       - name: Deploy and verify website
         if: inputs.rollback_version == ''
-        run: pnpm deploy
+        run: pnpm run deploy
       - name: Restore retained version
         if: inputs.rollback_version != ''
         env:
