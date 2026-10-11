@@ -1,0 +1,47 @@
+name: Deploy website to Cloudflare
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      rollback_version:
+        description: Retained Cloudflare version UUID to restore (empty deploys main)
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: website-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CLOUDFLARE_ACCOUNT_ID: e34437d6da60fe58537bafc5eb760cfc
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - name: Check deployment credentials
+        run: test -n "$CLOUDFLARE_API_TOKEN"
+      - name: Deploy and verify website
+        if: inputs.rollback_version == ''
+        run: pnpm deploy
+      - name: Restore retained version
+        if: inputs.rollback_version != ''
+        env:
+          ROLLBACK_VERSION: ${{ inputs.rollback_version }}
+        run: pnpm hosting:rollback-version "$ROLLBACK_VERSION"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-release-${{ github.sha }}
+          path: .cloudflare/release.json
+          if-no-files-found: ignore

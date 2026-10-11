@@ -13,7 +13,14 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "git config core.hooksPath .githooks"
+    "prepare": "git config core.hooksPath .githooks",
+    "hosting:prepare": "node scripts/deploy/hosting.mjs prepare",
+    "deploy:candidate": "pnpm build && node scripts/deploy/hosting.mjs candidate",
+    "deploy": "pnpm build && node scripts/deploy/hosting.mjs deploy",
+    "hosting:cutover": "node scripts/deploy/hosting.mjs cutover",
+    "hosting:rollback": "node scripts/deploy/hosting.mjs rollback",
+    "hosting:rollback-version": "node scripts/deploy/hosting.mjs rollback-version",
+    "hosting:verify": "node scripts/deploy/verify.mjs"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -21,13 +28,12 @@
     ]
   },
   "devDependencies": {
+    "@cloudflare/build-output-utils": "0.9.0",
     "@tailwindcss/vite": "4.2.2",
+    "cf": "1.0.0-beta.14",
     "prettier": "3.8.3",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tailwindcss": "4.2.2",
     "vite": "5.4.21"
-  },
-  "dependencies": {
-    "@vercel/analytics": "2.0.1"
   }
 }
