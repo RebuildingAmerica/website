@@ -231,7 +231,13 @@ else if (action === "candidate" || action === "deploy") {
   cf(["workers", "deployments", "create", "--worker", worker], {
     body: { strategy: "percentage", versions: [{ version_id: version, percentage: 100 }] },
   });
-  if (deployed().versionId !== version) throw new Error("Rollback version readback failed.");
+  let active;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    active = deployed();
+    if (active.versionId === version) break;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  if (active.versionId !== version) throw new Error("Rollback version readback failed.");
   await verify("https://www.rebuildingus.org", { compareBuild: false });
   console.log(JSON.stringify(deployed()));
 } else throw new Error("Use prepare, candidate, deploy, cutover, rollback, or rollback-version.");
