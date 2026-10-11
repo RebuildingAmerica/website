@@ -64,7 +64,35 @@ Preserve the ignored `.cloudflare/dns-rollback.json`,
 checkout before retiring it. These files contain recovery evidence, not tokens.
 Do not delete the Vercel project or shared subscription during migration.
 
-To return the public hostnames to the retained Vercel deployment:
+The Vercel website was retired on 2026-10-10: `rap-website` is paused, its
+GitHub repository is disconnected, and its apex/www project-domain bindings
+are removed. The project and immutable deployment
+`dpl_9NCW14zdT6BQkKpNu9ZiqSTYHrar` remain for recovery. That deployment contains
+Git commit `7931a35de9c9034a17954d18f9ee25589edc67d1`. The shared team
+subscription and the external `rebuildingus.org` team-domain record remain
+because Atlas still has subdomains on that team. Do not remove the shared
+domain or cancel the subscription until Atlas has migrated.
+
+To prepare the retained Vercel deployment for recovery, authenticate the Vercel
+CLI and restore only the website's project bindings:
+
+```sh
+vercel api /v1/projects/prj_gXXVIS1ALhBqU2fe4YtL0Uhy1Vkd/unpause --method POST --scope rebuilding-america-project
+vercel api /v10/projects/prj_gXXVIS1ALhBqU2fe4YtL0Uhy1Vkd/domains --method POST --field name=www.rebuildingus.org --scope rebuilding-america-project
+vercel api /v10/projects/prj_gXXVIS1ALhBqU2fe4YtL0Uhy1Vkd/domains --method POST --field name=rebuildingus.org --field redirect=www.rebuildingus.org --field redirectStatusCode=307 --scope rebuilding-america-project
+```
+
+Vercel can take several minutes to resume serving after the unpause request.
+The retirement recovery check confirmed that unpause and both domain bindings
+can be restored, but the retained origin still returned `DEPLOYMENT_PAUSED`
+during the immediate checks; it was paused again afterward. Verify the retained origin at
+`https://rap-website-lu1oy8md6-rebuilding-america-project.vercel.app` before
+changing DNS. The Git connection can remain disconnected during recovery;
+restoring the existing deployment does not require another Vercel build.
+If the domains have already been restored, inspect their existing bindings
+instead of repeating the add commands.
+
+Then return the public hostnames to the retained Vercel deployment:
 
 ```sh
 pnpm hosting:rollback
