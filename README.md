@@ -1,7 +1,7 @@
 # The Rebuilding America Project Website
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black.svg)](https://vercel.com)
+[![Deployed on Cloudflare](https://img.shields.io/badge/Deployed%20on-Cloudflare-F38020.svg)](https://www.rebuildingus.org)
 [![Built with Vite](https://img.shields.io/badge/Built%20with-Vite-646CFF.svg)](https://vite.dev)
 [![Styled with Tailwind CSS](https://img.shields.io/badge/Styled%20with-Tailwind%20CSS-06B6D4.svg)](https://tailwindcss.com)
 [![Code style: Prettier](https://img.shields.io/badge/Code%20style-Prettier-F7B93E.svg)](https://prettier.io)
@@ -42,6 +42,12 @@ To create a production build:
 pnpm build     # outputs to dist/
 pnpm preview   # preview the production build locally
 ```
+
+## Hosting
+
+Production uses Cloudflare Workers Static Assets, with automated deployment from
+GitHub and repository commands for verification and rollback. See
+[hosting operations](docs/operations/hosting.md) for the deploy and recovery paths.
 
 ## Contributing
 

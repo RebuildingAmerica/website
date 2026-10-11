@@ -22,3 +22,6 @@ dist/
 
 # Dev tooling
 .superpowers/
+
+# Cloudflare build output and local rollback evidence
+.cloudflare/
