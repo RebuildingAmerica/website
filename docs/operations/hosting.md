@@ -33,7 +33,7 @@ A local operator can use an existing Cloudflare OAuth profile:
 pnpm install --frozen-lockfile
 export CLOUDFLARE_ACCOUNT_ID=e34437d6da60fe58537bafc5eb760cfc
 export WEBSITE_CF_PROFILE=atlas
-pnpm deploy
+pnpm run deploy
 ```
 
 For token authentication, supply `CLOUDFLARE_API_TOKEN` through the environment
@@ -46,7 +46,7 @@ The public candidate URL is
 `https://rebuilding-america-website.rebuildingus.workers.dev`.
 `pnpm deploy:candidate` deploys a candidate before the first cutover. It refuses
 to run when the production hostnames already use Cloudflare.
-For ordinary releases, use `pnpm deploy` so both production domains stay attached.
+For ordinary releases, use `pnpm run deploy` so both production domains stay attached.
 
 ## Initial cutover and Vercel recovery
 
